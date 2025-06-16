@@ -11,8 +11,6 @@ class Solution {
             if("".equals(str.replaceAll("-", ""))){
                 answer++;
             }
-            
-            
         }
             
         return answer;
