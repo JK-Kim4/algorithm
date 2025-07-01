@@ -2,17 +2,19 @@ import java.util.*;
 
 class Solution {
     
-    private List<int[]> hanoi(int n, int from, int to) {
-        if (n == 1) return List.of(new int[] {from, to});
+    public List<int[]> hanoi (int n, int start, int end) {
+        if (n == 1) return List.of(new int[] {start, end});
         
-        int empty = 6 - from - to;
-        List<int[]> result = new ArrayList<>();
-        result.addAll(hanoi(n - 1, from, empty));
-        result.addAll(hanoi(1, from, to));
-        result.addAll(hanoi(n-1, empty, to));
-        return result;
+        int empty = 6 - start - end;
         
+        List<int[]> list = new ArrayList();
+        list.addAll(hanoi(n-1, start, empty));    
+        list.addAll(hanoi(1, start, end));
+        list.addAll(hanoi(n-1, empty, end));
+    
+        return list;
     }
+
     
     public int[][] solution(int n) {
         return hanoi(n,1,3).toArray(new int[0][]);
