@@ -29,12 +29,9 @@ class Solution {
             
             for (int[] yia : yMeasures) {
                 int diff = tia[0] - yia[0];
-                if (yia[1] + diff == tia[1]) return tia;
-            }
-            
+                if (yia[1] + diff == tia[1]) answer = tia;
+            }    
         }
-        
-        
         
         return answer;
     }
