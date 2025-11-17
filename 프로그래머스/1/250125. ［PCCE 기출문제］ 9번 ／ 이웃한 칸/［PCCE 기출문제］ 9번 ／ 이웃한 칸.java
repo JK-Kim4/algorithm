@@ -25,8 +25,7 @@ class Solution {
             int tempW = w + d[1];
             
             if (tempH >= 0 && tempW >= 0 && tempH < length && tempW < length) {
-                int[] target = {tempH, tempW};
-                result.add(target);
+                result.add(new int[]{tempH, tempW});
             }
         }
         return result;
