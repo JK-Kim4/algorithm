@@ -1,33 +1,34 @@
+import java.util.*;
+
 class Solution {
     public int solution(String[][] board, int h, int w) {
         int answer = 0;
-        int boradLength = board.length;
-        
-        int top = h - 1;
-        int bottom = h + 1;
-        int left = w - 1;
-        int right = w + 1;
-        
         String target = board[h][w];
-
-        if (top >= 0 && board[top][w].equals(target)) {
-            answer++;
-        }
+        List<int[]> avaliableDirections = getDirections(h,w,board.length);
         
-        if (bottom <= boradLength -1 && board[bottom][w].equals(target)) {
-            answer++;
-        }
-        
-        if (left >= 0 && board[h][left].equals(target)) {
-            answer++;
-        }
-        
-        if (right <= boradLength -1 && board[h][right].equals(target)) {
-            answer++;
-        }
-        
-        
-        
+        for (int[] d : avaliableDirections) {
+            if (target.equals(board[d[0]][d[1]])) {
+                answer++;
+            }   
+        }        
         return answer;
+    }
+    
+    private List<int[]> getDirections(int h, int w, int length) {
+        List<int[]> result = new ArrayList<>();
+        
+        int[][] directions = {{-1,0}, {1,0}, {0,-1},{0,1}};
+        
+        
+        for (int[] d : directions) {
+            int tempH = h + d[0];
+            int tempW = w + d[1];
+            
+            if (tempH >= 0 && tempW >= 0 && tempH < length && tempW < length) {
+                int[] target = {tempH, tempW};
+                result.add(target);
+            }
+        }
+        return result;
     }
 }
