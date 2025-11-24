@@ -1,28 +1,29 @@
 class Solution {
     
-    private int result;
     private boolean[] visited;
+    private int result;
     
     public int solution(int n, int[][] computers) {
-        this.visited = new boolean[n];
+        visited = new boolean[n];
         
-        
-        for(int i = 0; i < n; i++){
-            if(!visited[i]){
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
                 this.result++;
-                this.dfs(i, computers);
+                this.find(i, computers);    
             }
         }
+        
         
         return this.result;
     }
     
-    public void dfs(int i, int[][] computers){
+    public void find(int i, int[][] computers) {
         this.visited[i] = true;
+        int[] c = computers[i];
         
-        for(int j = 0; j < computers.length; j++){
-            if( !visited[j] && computers[i][j] == 1 ){
-                dfs(j, computers);
+        for (int j = 0; j < c.length; j++) {
+            if (!visited[j] && c[j] == 1) {
+                this.find(j, computers);
             }
         }
     }
