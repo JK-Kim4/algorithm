@@ -1,10 +1,14 @@
 class Solution {
     boolean solution(String s) {    
-        s = s.toUpperCase();
+        int ps = 0;
+        int ys = 0;
         
-        //시간비교 1. replace 사용
-        int ps = s.length() - s.replaceAll("P", "").length();
-        int ys = s.length() - s.replaceAll("Y", "").length();
+        //시간비교 2. count
+        for (char c : s.toCharArray()) {
+            if ( c == 'P' || c == 'p') ps++;
+            if ( c == 'Y' || c == 'y') ys++;
+            
+        }
 
         return ps == ys;
     }
