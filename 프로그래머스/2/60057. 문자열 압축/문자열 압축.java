@@ -1,51 +1,31 @@
-import java.util.*;
-
 class Solution {
-    
-     public List<String> split(String source, int length) {
-         List<String> tokens = new ArrayList();
-         
-         for (int startIndex = 0; startIndex < source.length(); startIndex += length) {
-             int endIndex = startIndex + length;
-             if (endIndex > source.length()) endIndex = source.length();
-             
-             tokens.add(source.substring(startIndex, endIndex));
-         }
-         
-         return tokens;
-     }
-    
-    
-    public int compress(String source, int length) {
-        StringBuilder sb = new StringBuilder();
-        String last = "";
-        int count = 0;
-        
-        for (String token : split(source, length)) {
-            if (token.equals(last)) {
-                count++;
-            } else {
-                if (count > 1) sb.append(count);
-                sb.append(last);
-                last = token;
-                count = 1;    
-            }
-        }
-        if (count > 1) sb.append(count);
-        sb.append(last);
-        
-        return sb.toString().length();
-    }
-    
-    
-    
-    
     public int solution(String s) {
-        int min = Integer.MAX_VALUE;
-        
-        for (int i = 1; i <= s.length(); i++) {
-            int temp = compress(s, i);
-            if (temp < min) min = temp;
+        int min = s.length();
+        int len = s.length()/2+1;
+        for(int i = 1; i < len; i++) {
+            String before = "";
+            int sum = 0;
+            int cnt = 1;
+            for(int j = 0; j < s.length();) {               
+                int start = j;
+                j = (j+i > s.length()) ? s.length():j+i;
+                String temp = s.substring(start, j);
+                if(temp.equals(before)) {
+                    cnt++;
+                } else {
+                    if(cnt != 1) {
+                        sum += (int)Math.log10(cnt)+1;
+                    }
+                    cnt = 1;
+                    sum+=before.length();
+                    before = temp;
+                }
+            }
+            sum+=before.length();
+            if(cnt != 1) {
+                sum += (int)Math.log10(cnt)+1;
+            }
+            min = (min > sum) ? sum : min;
         }
 
         return min;
