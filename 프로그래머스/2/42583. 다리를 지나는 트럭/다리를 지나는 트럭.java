@@ -35,7 +35,10 @@ class Solution {
             }
             
             // 4. 대기중 트럭 이동
-            if (moveT.size() < bridge_length && !waitT.isEmpty() && waitT.peek().weight + curWeight <= weight) {
+            if (moveT.size() < bridge_length && 
+                !waitT.isEmpty() && 
+                    waitT.peek().weight + curWeight <= weight
+               ) {
                 Truck t = waitT.poll();
                 curWeight += t.weight;
                 moveT.offer(t);
