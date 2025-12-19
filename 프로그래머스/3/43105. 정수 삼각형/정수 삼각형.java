@@ -1,12 +1,9 @@
 import java.lang.Math;
+import java.util.*;
 
 class Solution {
     public int solution(int[][] triangle) {
-        int answer = Integer.MIN_VALUE;
-        int[][] memoriese = new int[triangle.length][];
-        memoriese[0] = triangle[0];
-        
-        
+        int answer = Integer.MIN_VALUE;    
         for (int i = 0; i < triangle.length -1; i++) {
             int[] row = triangle[i];
             int[] nextRow = triangle[i+1];
@@ -21,13 +18,6 @@ class Solution {
             }
         }
         
-        int[] leafs = triangle[triangle.length-1];
-        
-        for (int i : leafs) {
-            answer = Math.max(answer, i);
-        }
-        
-        
-        return answer;
+        return Arrays.stream(triangle[triangle.length-1]).max().getAsInt();
     }
 }
