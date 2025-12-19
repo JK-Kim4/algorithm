@@ -28,12 +28,14 @@ class Solution {
                 t.moving();
             }
             
+            // 3. 이동 완료 트럭 제거
             if (moveT.peek().position > bridge_length) {
                 Truck t = moveT.poll();
                 curWeight -= t.weight;
             }
             
-            if (!waitT.isEmpty() && waitT.peek().weight + curWeight <= weight ) {
+            // 4. 대기중 트럭 이동
+            if (moveT.size() < bridge_length && !waitT.isEmpty() && waitT.peek().weight + curWeight <= weight) {
                 Truck t = waitT.poll();
                 curWeight += t.weight;
                 moveT.offer(t);
