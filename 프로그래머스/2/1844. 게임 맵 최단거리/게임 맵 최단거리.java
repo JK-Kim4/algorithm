@@ -1,58 +1,58 @@
 import java.util.*;
+
 class Solution {
     public int solution(int[][] maps) {
         Maze maze = new Maze(maps);
-        return maze.bfs(0,0);
+        return maze.search(0,0);
     }
 }
 
+
 class Maze {
+
+    private static final int[][] DIRECTIONS = {
+        {1,0}, {-1,0}, {0,1}, {0,-1}
+    };
 
     int[][] maze;
     int maxRow, maxColumn;
-    int[][] visited;
-    int[] moveRow = {1, -1, 0, 0};
-    int[] moveColumn = {0, 0, 1, -1};
+    int[][] dist;
 
-
-
-    public Maze(int[][] maze){
+    public Maze(int[][] maze) {
         this.maze = maze;
         this.maxRow = maze.length;
         this.maxColumn = maze[0].length;
-        this.visited = new int[maze.length][maze[0].length];
+        this.dist = new int[maxRow][maxColumn];
     }
 
-    public int bfs(int startRow, int startColumn){
-        Queue<int[]> visitedQueue = new LinkedList<>();
-        visitedQueue.add(new int[]{startRow,startColumn});
-        this.visited[startRow][startColumn] = 1;
-
-        while (visitedQueue.peek() != null){
-            int[] current = visitedQueue.poll();
-            int currentRow = current[0];
-            int currentColumn = current[1];
-            
-            if(currentRow == maxRow-1 && currentColumn == maxColumn-1){
-                return this.visited[currentRow][currentColumn];
+    public int search(int startRow, int startColumn) {
+        Queue<int[]> q = new LinkedList();
+        q.offer(new int[]{startRow, startColumn});
+        dist[startRow][startColumn] = 1;
+        
+        while (!q.isEmpty()) {
+            int[] current = q.poll();
+                
+            if (current[0] == maxRow-1 && current[1] == maxColumn -1) {
+                return dist[current[0]][current[1]];
             }
 
-            for(int i = 0; i < 4; i++){
-                int nextRow = currentRow + moveRow[i];
-                int nextColumn = currentColumn + moveColumn[i];
-                if(inMaze(nextRow, nextColumn) && this.maze[nextRow][nextColumn] == 1 && this.visited[nextRow][nextColumn] == 0){
-                    this.visited[nextRow][nextColumn] = this.visited[currentRow][currentColumn]+1;
-                    visitedQueue.add(new int[]{nextRow, nextColumn});
+            for (int[] direction : DIRECTIONS) {
+                int nextRow = current[0] + direction[0];
+                int nextColumn = current[1] + direction[1];
+                
+                if (
+                    (nextRow >= 0 && nextRow < maxRow)
+                    && (nextColumn >= 0 && nextColumn < maxColumn)
+                    && maze[nextRow][nextColumn] == 1 
+                    && dist[nextRow][nextColumn] == 0
+                   ) {
+                    dist[nextRow][nextColumn] = dist[current[0]][current[1]] + 1;
+                    q.offer(new int[]{nextRow, nextColumn});
                 }
-
             }
         }
-
-
         return -1;
     }
 
-    public boolean inMaze(int row, int column){
-        return 0 <= row && row < maxRow && 0 <= column && column < maxColumn;
-    }
 }
