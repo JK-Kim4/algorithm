@@ -1,10 +1,10 @@
 # [level 2] 주식가격 - 42584 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42584) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42584?gad_source=1&gad_campaignid=22681436564&gbraid=0AAAAAC_c4nAwzATms1Qk83zZiVT5A5FVj&gclid=Cj0KCQiAx8PKBhD1ARIsAKsmGbfLhu8uWqS8TueFndPtqrj9fRpV0OmsAjZHrT1Cd-G6oIhgqteK85waAvWPEALw_wcB) 
 
 ### 성능 요약
 
-메모리: 79.4 MB, 시간: 31.55 ms
+메모리: 71.5 MB, 시간: 17.10 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 12월 19일 22:35:51
+2025년 12월 28일 21:52:16
 
 ### 문제 설명
 
