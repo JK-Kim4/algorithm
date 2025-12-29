@@ -2,28 +2,32 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        
-        List<Integer> result = new ArrayList();
-        
-        Queue<Integer> remainingDays = new LinkedList();
+        List<Integer> answer = new ArrayList<>();
+        Queue<Integer> requiredDays = new LinkedList<>();
         
         for (int i = 0; i < progresses.length; i++) {
-            int remainDay = (int)Math.ceil(((double)(100 - progresses[i]) / speeds[i]));
-            remainingDays.add(remainDay);
+            requiredDays.offer((int)Math.ceil( (100.0 - progresses[i]) / speeds[i]));
         }
         
-        while (!remainingDays.isEmpty()) {
+        while (!requiredDays.isEmpty()) {
             int count = 1;
-            int days = remainingDays.poll();
-            while (!remainingDays.isEmpty() && remainingDays.peek() <= days) {
-                remainingDays.poll();
+            int days = requiredDays.poll();
+            
+            while (!requiredDays.isEmpty() && requiredDays.peek() <= days) {
+                requiredDays.poll();
                 count++;
             }
-            result.add(count);
+            
+            answer.add(count);
         }
+        
+        int[] result = new int[answer.size()];
+        
+        for (int i = 0; i < result.length; i++) {
+            result[i] = answer.get(i);
+        }
+        
 
-        return result.stream()
-            .mapToInt(Integer::intValue)
-            .toArray();
-        }
+        return result;
+    }
 }
