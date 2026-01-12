@@ -15,28 +15,31 @@ class Solution {
 
         for (int[] w : wires) {
             int cutA = w[0], cutB = w[1];
-
-            boolean[] visited = new boolean[n + 1];
-            int cnt = dfsCount(cutA, cutA, cutB, adj, visited); // cutA 쪽 컴포넌트 크기
-            int diff = Math.abs(n - 2 * cnt);
+            
+            boolean[] visited = new boolean[n];
+            int cnt = dfs(cutA, cutA, cutB, adj, visited);
+            int diff = Math.abs(cnt - (n - cnt));
             answer = Math.min(answer, diff);
         }
-
+        
         return answer;
     }
-
-    private int dfsCount(int cur, int cutA, int cutB,
-                         List<Integer>[] adj, boolean[] visited) {
-        visited[cur] = true;
+    
+    private int dfs(int cur, int cutA, int cutB, List<Integer>[] adj, boolean[] visited) {
+        visited[cur-1] = true;
         int count = 1;
-
+        
         for (int next : adj[cur]) {
-            // 이번 루프에서 끊은 간선은 통과 금지
             if ((cur == cutA && next == cutB) || (cur == cutB && next == cutA)) continue;
-            if (!visited[next]) {
-                count += dfsCount(next, cutA, cutB, adj, visited);
+            
+            if (!visited[next-1]) {
+                count += dfs(next, cutA, cutB, adj, visited);
             }
+            
         }
+        
         return count;
     }
+
+
 }
