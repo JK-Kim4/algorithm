@@ -2,44 +2,51 @@ import java.util.*;
 
 class Solution {
     public int solution(int n, int[][] wires) {
-        List<Integer>[] adj = new ArrayList[n + 1];
-        for (int i = 1; i <= n; i++) adj[i] = new ArrayList<>();
-
-        for (int[] w : wires) {
-            int a = w[0], b = w[1];
-            adj[a].add(b);
-            adj[b].add(a);
-        }
-
+        List<Integer>[] adj = new ArrayList[n+1];
+        
         int answer = Integer.MAX_VALUE;
-
-        for (int[] w : wires) {
-            int cutA = w[0], cutB = w[1];
+        
+        // parameters set
+        for (int i = 1; i <= n; i++) {
+            adj[i] = new ArrayList();
+        }
+        
+        for (int[] wire : wires) {
+            adj[wire[0]].add(wire[1]);
+            adj[wire[1]].add(wire[0]);
+        }
+        
+        // dfs
+        for (int[] wire : wires) {
+            boolean[] visited = new boolean[n+1];
+            // wire 끊은 상태로 순회하며 count 
+            int count = dfs(wire[0], wire[0], wire[1], visited, adj);
+            int diff = Math.abs(count - (n - count));
             
-            boolean[] visited = new boolean[n];
-            int cnt = dfs(cutA, cutA, cutB, adj, visited);
-            int diff = Math.abs(cnt - (n - cnt));
-            answer = Math.min(answer, diff);
+            answer = Math.min(diff, answer);
         }
         
         return answer;
     }
     
-    private int dfs(int cur, int cutA, int cutB, List<Integer>[] adj, boolean[] visited) {
-        visited[cur-1] = true;
+    private int dfs(int cur, int cutA, int cutB, boolean[] visited, List<Integer>[] adj) {
         int count = 1;
+        visited[cur] = true;
         
-        for (int next : adj[cur]) {
-            if ((cur == cutA && next == cutB) || (cur == cutB && next == cutA)) continue;
+        // cur에 연결되어있는 좌표 중 방문하지 않은 노드를 찾아 재귀호출
+        for (int i : adj[cur]) {
+            if ((cur == cutA && i == cutB) || (cur == cutB && i == cutA)) continue;
             
-            if (!visited[next-1]) {
-                count += dfs(next, cutA, cutB, adj, visited);
+            
+            if (!visited[i]) {
+                count += dfs(i, cutA, cutB, visited, adj);
             }
-            
         }
         
         return count;
     }
+    
+    
 
 
 }
