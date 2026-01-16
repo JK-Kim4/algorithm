@@ -4,21 +4,20 @@ class Solution {
     private char[] vowels = new char[] {'A','E','I','O','U'};
 
     public int solution(String word) {
-        List<String> dictionary = generate("");
+        List<String> dictionary = new ArrayList();
+        
+        generate("", dictionary);
         
         return dictionary.indexOf(word);
     }
     
-    private List<String> generate(String s) {
-        List<String> words = new ArrayList<>();
-        words.add(s);
+    private void generate(String s, List<String> dictionary) {
+        dictionary.add(s);
         
-        if (s.length() == 5) return words;
+        if (s.length() == 5) return;
         
         for (char v : vowels) {
-            words.addAll(generate(s + v));
+            generate(s+v, dictionary);
         }
-        
-        return words;
     }
 }
